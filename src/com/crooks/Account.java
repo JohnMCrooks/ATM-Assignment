@@ -1,49 +1,57 @@
 package com.crooks;
 
+import java.util.HashMap;
+
 /**
  * Created by johncrooks on 5/18/16.
  */
 public class Account {
-    String name;
+    static String name;
     double balance = 100;
+    HashMap<String, Double> accounts = new HashMap<String, Double>();
 
     public Account() {
     }
 
     public void setName(){
+        accounts.put("john", 200.0);
+        accounts.put("alice", 100.0);
+
         System.out.println("Who are we serving today?");
-        String nameinput = Main.scanner.next();
-        this.name = nameinput;
-        System.out.println("Welcome " + name + ", It's been too long!");
+        String nameInput = Main.scanner.next();
+        this.name = nameInput;
+
+        if (accounts.containsKey(nameInput)){
+            System.out.println("welcome " + nameInput + " you have a balance of : $" + accounts.get(nameInput));
+        }else if ((!accounts.containsKey(nameInput))){
+            System.out.println("It appears as though you don't have an account...\n if you open one with us We'll give you a few bucks to get you started.  [y/n]\n");
+                accounts.put(nameInput, 15.0);
+                System.out.println("welcome " + nameInput + "!\n");
+        }
     }
 
-    public void atmSelection() throws Exception {
+    public void atmMenu() throws Exception {
         System.out.println("What can we do for you today?\n [1] Check My Balance\n [2] Withdraw Funds\n [3] Cancel\n");
 
-        //receive user input
+        //receive user selection
         int selection = Main.scanner.nextInt();
 
 
         if (selection == 1){
-            System.out.println("Your balance is $" + balance + ".\n");
-            atmSelection();
+            printBalance();
+            atmMenu();
         } else if( selection == 2){
             withdrawModule();
+
         } else if (selection == 3){
-            System.out.println("Are you sure you want to cancel?  [y/n]");
-            String confirm = Main.scanner.next();
-
-            if (confirm.equalsIgnoreCase("y")){
-                System.out.println("Thank you and please come again");
-            } else if(confirm.equalsIgnoreCase("n")){
-                atmSelection();
-            } else{
-                throw new Exception("Invalid Input!");
-            }
-
+            exitATM();
         } else{
             throw new Exception("That's not an option! Select option 1,2, or 3");
         }
+    }
+    public void printBalance() {
+        System.out.println(name + ", Your balance is $" + accounts.get(name) + ".\n");
+
     }
 
     public void withdrawModule() throws Exception {
@@ -52,18 +60,46 @@ public class Account {
 
         //receive users request
         int temp = Integer.valueOf(cashRequest);
+        double tempaccount = accounts.get(name);
 
         //Check to make sure user has enough cash to make withdraw
-        if (temp < balance && temp > 0){
+        if ((double) temp < tempaccount && temp > 0){
+
             System.out.println("Your cash is in being ejected now, Don't spend it all in one place.\n");
-            System.out.println("Old balance: " + balance + "\n");
+            System.out.println("Old balance: " + tempaccount + "\n");
 
             //update the balance
-            this.balance = (balance - temp);
+            this.balance = (tempaccount - temp);
             System.out.println("New Balance: " + (balance) + "\n");
-            atmSelection();
+            atmMenu();
         } else { throw new Exception("Nice try, but you don't have that much!");
         }
     }
 
+    public void exitATM() throws Exception {
+        System.out.println("Are you sure you want to cancel?  [y/n]");
+        String confirm = Main.scanner.next();
+
+        if (confirm.equalsIgnoreCase("y")){
+            System.out.println("Thank you and please come again");
+        } else if(confirm.equalsIgnoreCase("n")){
+            login();
+        } else{
+            throw new Exception("Invalid Input!");
+        }
+    }
+    public void login() throws Exception {
+        System.out.println("Would you like to login? [y/n]");
+        String temp = Main.scanner.next();
+
+        if (temp.equals("y")){
+            while (!Main.logout) {
+                setName();
+                atmMenu();
+            }
+        }else {
+            System.out.println("Goodbye");
+        }
+
+    }
 }
