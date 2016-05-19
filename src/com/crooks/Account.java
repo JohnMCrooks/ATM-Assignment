@@ -31,7 +31,7 @@ public class Account {
     }
 //TODO add Admin Menu and Remove Account options
     public void atmMenu() throws Exception {
-        System.out.println("What can we do for you today?\n [1] Check My Balance\n [2] Withdraw Funds\n [3] Cancel\n");
+        System.out.println("What can we do for you today?\n [1] Check My Balance\n [2] Withdraw Funds\n [3] Close Account\n [4] Admin Menu \n [5] Sign off ");
 
         //receive user selection
         int selection = Main.scanner.nextInt();
@@ -42,16 +42,37 @@ public class Account {
             atmMenu();
         } else if( selection == 2){
             withdrawModule();
-
         } else if (selection == 3){
+            removeAccount();
+        } else if (selection == 4){
+            //adminMenu();
+        } else if (selection == 5){
             exitATM();
-        } else{
+        }
+
+        else{
             throw new Exception("That's not an option! Select option 1,2,3,4, or 5");
         }
     }
     public void printBalance() {
         System.out.println(name + ", Your balance is $" + accounts.get(name) + ".\n");
+    }
 
+    public void removeAccount() throws Exception {
+        System.out.println("Are you sure you want to close your account? [y/n]");
+        String confirm = Main.scanner.next();
+
+        if (confirm.equalsIgnoreCase("y")){
+            System.out.println("Alrighty, goodluck.");
+            accounts.remove(name);
+            System.out.println(accounts);
+        }
+        else if(confirm.equalsIgnoreCase("n")){
+            atmMenu();
+        }
+        else{
+            throw new Exception("Invalid Input!");
+        }
     }
 
     public void withdrawModule() throws Exception {
@@ -99,7 +120,7 @@ public class Account {
                 atmMenu();
             }
         }else {
-            System.out.println("Goodbye");
+            System.out.println("ATM Shutting Down...");
         }
 
     }
