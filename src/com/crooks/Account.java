@@ -46,7 +46,7 @@ public class Account {
         } else if (selection == 3){
             exitATM();
         } else{
-            throw new Exception("That's not an option! Select option 1,2, or 3");
+            throw new Exception("That's not an option! Select option 1,2,3,4, or 5");
         }
     }
     public void printBalance() {
@@ -72,6 +72,7 @@ public class Account {
             this.balance = (tempaccount - temp);
             System.out.println("New Balance: " + (balance) + "\n");
             atmMenu();
+            accounts.put(name,balance);
         } else { throw new Exception("Nice try, but you don't have that much!");
         }
     }
