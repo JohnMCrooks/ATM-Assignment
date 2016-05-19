@@ -9,6 +9,7 @@ public class Account {
     static String name;
     double balance = 100;
     HashMap<String, Double> accounts = new HashMap<String, Double>();
+    static private final String adminPass = "TIY2016";
 
     public Account() {
     }
@@ -31,7 +32,7 @@ public class Account {
     }
 //TODO add Admin Menu and Remove Account options
     public void atmMenu() throws Exception {
-        System.out.println("What can we do for you today?\n [1] Check My Balance\n [2] Withdraw Funds\n [3] Close Account\n [4] Admin Menu \n [5] Sign off ");
+        System.out.println("What can we do for you today?\n [1] Check My Balance\n [2] Withdraw Funds\n [3] Close Account\n [4] Admin View \n [5] Sign off ");
 
         //receive user selection
         int selection = Main.scanner.nextInt();
@@ -45,7 +46,7 @@ public class Account {
         } else if (selection == 3){
             removeAccount();
         } else if (selection == 4){
-            //adminMenu();
+            adminMenu();
         } else if (selection == 5){
             exitATM();
         }
@@ -56,6 +57,18 @@ public class Account {
     }
     public void printBalance() {
         System.out.println(name + ", Your balance is $" + accounts.get(name) + ".\n");
+    }
+    public void adminMenu() throws Exception {
+        System.out.println("Enter the Password");
+        String temp = Main.scanner.next();
+        if (temp.equals(adminPass)){
+            System.out.println("current accounts include: " + accounts);
+            atmMenu();
+        } else{
+            System.out.println("you aren't allowed here");
+            atmMenu();
+        }
+
     }
 
     public void removeAccount() throws Exception {
@@ -99,7 +112,7 @@ public class Account {
     }
 
     public void exitATM() throws Exception {
-        System.out.println("Are you sure you want to cancel?  [y/n]");
+        System.out.println("Are you sure you want to Sign out?  [y/n]");
         String confirm = Main.scanner.next();
 
         if (confirm.equalsIgnoreCase("y")){
