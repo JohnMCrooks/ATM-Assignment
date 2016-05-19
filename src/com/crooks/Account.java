@@ -29,7 +29,7 @@ public class Account {
                 System.out.println("welcome " + nameInput + "!\n");
         }
     }
-
+//TODO add Admin Menu and Remove Account options
     public void atmMenu() throws Exception {
         System.out.println("What can we do for you today?\n [1] Check My Balance\n [2] Withdraw Funds\n [3] Cancel\n");
 
