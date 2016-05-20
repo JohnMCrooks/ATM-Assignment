@@ -17,6 +17,8 @@ public class Account {
     public void setName(){
         accounts.put("john", 200.0);
         accounts.put("alice", 100.0);
+        accounts.put("bob", 134.56);
+        accounts.put("charlie", 45.0);
 
         System.out.println("Who are we serving today?");
         String nameInput = Main.scanner.next();
